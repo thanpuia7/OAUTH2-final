@@ -41,5 +41,27 @@ public class UserService {
 		
 		return repo.findByUsername(username);
 	}
+
+	public boolean findPhone(String phoneno) {
+		
+		if(repo.findByPhoneno(phoneno).isPresent())
+			return true;
+			
+		else
+			return false;
+			
+		
+		
+	}
+
+	public boolean findEmail(String email) {
+		
+		if(repo.findByEmail(email).isPresent())
+			return true;
+			
+		else
+			return false;
+			
+	}
 	
 }

@@ -1,6 +1,7 @@
 package com.thanpuia.oath2.msegs.controller;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,7 +61,17 @@ public class HomeController {
 
     	if(userService.findUser(user.getUsername()))
     		
-    		return "Exist";
+    		return "Username Exist";
+    	
+    	else if(userService.findPhone(user.getPhoneno()))
+    		
+    		return "Phoneno Exist";
+    	
+    	else if(userService.findEmail(user.getEmail()))
+    		return "Email Exist";
+    	
+    	
+    	
     	else
     	{
 userService.save(new User(
@@ -136,17 +147,47 @@ Arrays.asList(new Role("USER")),//roles
 	  
 	  Optional<User> user11=repo.findById(user.getId());
 	  User user22=user11.get();
-
-  	if(userService.findUser(user.getUsername()) && user.getId()!=user22.getId())
-  		                                                                                                                               
-  		 return "Exist";
-  	
-  	
-  	else
+	  
+	  
+  	if(userService.findUser(user.getUsername()))
   	{
+  	  Optional<User>user33=repo.findByUsername(user.getUsername());
+  	 
+  	  User user44=user33.get();
+  		
+  	   if(user.getId()!=user44.getId())
+  		 return "Username already exist";
+  	} 
+  		 
+  	
+  	
+  	
+  	if(userService.findPhone(user.getPhoneno()) )
+  	{   
+  		Optional<User>user55=repo.findByPhoneno(user.getPhoneno());
+  	  User user66=user55.get();
+  		
+  		if(user.getId()!=user66.getId())
+  		
+        return "Phoneno already exist";
+  	}
+  	
+  	
+  if(userService.findEmail(user.getEmail()) )
+  	{  
+  		 
+  	  Optional<User>user77=repo.findByEmail(user.getEmail());
+  	  User user88=user77.get();
+  	  if(user.getId()!=user88.getId())
+  	  
+ 		 return "Email already exist";
+  	
+  	}
+  	
+  
 repo.save(new User(
 				
-			  user.getId(),
+			user.getId(),
             user.getUsername(), //username
             user22.getPassword(), //password
             user.getEmail(),
@@ -158,10 +199,7 @@ Arrays.asList(new Role("USER")),//roles
              true//Active
               
 		 ));
-		
-
-		return "user updated successfully...";
-	}
+	return "user updated successfully...";	
   	
   }
   
@@ -191,7 +229,7 @@ Arrays.asList(new Role("USER")),//roles
 	  }
 	  
 	  else 
-		  
+	  {
 		System.out.println(user.getPassword());
 	  	System.out.println(passwordEncoder.encode(user.getPassword()));
 	  	System.out.println(user22.getPassword());
@@ -202,9 +240,17 @@ Arrays.asList(new Role("USER")),//roles
 	  	
 		  return "Password not match";
 			  
-	  
+	  }
 	 
 }
+  
+//@PreAuthorize("hasAnyRole('ADMIN')")
+ @GetMapping(value = "/adminView")
+ public List<User> adminView(@PathVariable String username) {
+	  
+	 return repo.findAll();  
+	  
+ }
 
 
   
