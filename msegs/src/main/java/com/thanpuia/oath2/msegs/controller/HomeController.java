@@ -246,7 +246,7 @@ Arrays.asList(new Role("USER")),//roles
   
 //@PreAuthorize("hasAnyRole('ADMIN')")
  @GetMapping(value = "/adminView")
- public List<User> adminView(@PathVariable String username) {
+ public List<User> adminView(/*@PathVariable String username*/) {
 	  
 	 return repo.findAll();  
 	  
