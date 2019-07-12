@@ -36,6 +36,9 @@ public class User{
     private List<Role> roles;
     private boolean active;
     
+    @Transient
+    private String newpassword;
+    
     
     
     
@@ -72,6 +75,30 @@ public class User{
 
 
 
+
+
+	public User(Integer id, String username, String password, String email, String phoneno, List<Role> roles,
+			boolean active, String newpassword) {
+	
+		this.id = id;
+		this.username = username;
+		this.password = password;
+		this.email = email;
+		this.phoneno = phoneno;
+		this.roles = roles;
+		this.active = active;
+		this.newpassword = newpassword;
+	}
+
+
+	public String getNewpassword() {
+		return newpassword;
+	}
+
+
+	public void setNewpassword(String newpassword) {
+		this.newpassword = newpassword;
+	}
 
 
 	public User(String username, String password, String email, String phoneno, List<Role> roles, boolean active) {

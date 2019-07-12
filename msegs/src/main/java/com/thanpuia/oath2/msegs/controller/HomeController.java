@@ -206,44 +206,86 @@ Arrays.asList(new Role("USER")),//roles
   
   
   
-  @PostMapping(value = "/changePass/{newpassword}")
-	public String changePass(@RequestBody User user,@PathVariable String  newpassword) {
-	  
-	  
-	  Optional<User> user11=repo.findById(user.getId());
-	  User user22=user11.get();
-	  
-	  
-	  boolean result = passwordEncoder.matches(user.getPassword(), user22.getPassword());
-	 
-	  if(result)
-	  { 
-		 
-		  
-		  user22.setPassword(passwordEncoder.encode(newpassword));
-		  
-		  repo.save(user22);
-		  
-		  return "Password updated successfully";
-		  
-	  }
-	  
-	  else 
-	  {
-		System.out.println(user.getPassword());
-	  	System.out.println(passwordEncoder.encode(user.getPassword()));
-	  	System.out.println(user22.getPassword());
-	  	
-	  	System.out.println(user.getId());
-	  	System.out.println(newpassword);
-	  	
-	  	
-		  return "Password not match";
-			  
-	  }
-	 
-}
+	/*
+	 * @PostMapping(value = "/changePass/{newpassword}") public String
+	 * changePass(@RequestBody User user,@PathVariable String newpassword) {
+	 * 
+	 * 
+	 * Optional<User> user11=repo.findById(user.getId()); User user22=user11.get();
+	 * 
+	 * 
+	 * boolean result = passwordEncoder.matches(user.getPassword(),
+	 * user22.getPassword());
+	 * 
+	 * if(result) {
+	 * 
+	 * 
+	 * user22.setPassword(passwordEncoder.encode(newpassword));
+	 * 
+	 * repo.save(user22);
+	 * 
+	 * return "Password updated successfully";
+	 * 
+	 * }
+	 * 
+	 * else { System.out.println(user.getPassword());
+	 * System.out.println(passwordEncoder.encode(user.getPassword()));
+	 * System.out.println(user22.getPassword());
+	 * 
+	 * System.out.println(user.getId()); System.out.println(newpassword);
+	 * 
+	 * 
+	 * return "Password not match";
+	 * 
+	 * }
+	 * 
+	 * }
+	 * 
+	 */
   
+  
+  
+  
+  
+  
+  @PostMapping(value = "/changePass")
+ 	public String changePass(@RequestBody User user) {
+ 	  
+ 	  
+ 	  Optional<User> user11=repo.findById(user.getId());
+ 	  User user22=user11.get();
+ 	  
+ 	  
+ 	  boolean result = passwordEncoder.matches(user.getPassword(), user22.getPassword());
+ 	 
+ 	  if(result)
+ 	  { 
+ 		 
+ 		  
+ 		  user22.setPassword(passwordEncoder.encode(user.getNewpassword()));
+ 		  
+ 		  repo.save(user22);
+ 		  
+ 		  return "Password updated successfully";
+ 		  
+ 	  }
+ 	  
+ 	  else 
+ 	  {
+ 		System.out.println(user.getPassword());
+ 	  	System.out.println(passwordEncoder.encode(user.getPassword()));
+ 	  	System.out.println(user22.getPassword());
+ 	  	
+ 	  	System.out.println(user.getId());
+ 	  	System.out.println(user.getNewpassword());
+ 	  	
+ 	  	
+ 		  return "Password not match";
+ 			  
+ 	  }
+ 	 
+ }
+   
 //@PreAuthorize("hasAnyRole('ADMIN')")
  @GetMapping(value = "/adminView")
  public List<User> adminView(/*@PathVariable String username*/) {
